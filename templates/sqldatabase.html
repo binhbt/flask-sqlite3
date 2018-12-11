@@ -30,12 +30,12 @@
         {% for eresult in eresults %}
 
         <form action = "edit" method = "POST">
-         <p>First Name: <input class="form-control" type = "text" name = "first_name" style='width: 100%;' value='{{eresult["word"]}}'/></p>
-         <p>Last Name: <input class="form-control" type = "text" name = "last_name" style='width: 100%;' value='{{eresult["payload"]}}' /></p>
-         <p>Address: <input class="form-control" type = "text" name = "address" style='width: 100%;' value='{{eresult["created_time"]}}' /></p>
+         <p>Word: <input class="form-control" type = "text" name = "first_name" style='width: 100%;' value='{{eresult["word"]}}'/></p>
+         <p>Mean: <input class="form-control" type = "text" name = "last_name" style='width: 100%;' value='{{eresult["payload"]}}' /></p>
+<!--         <p>Address: <input class="form-control" type = "text" name = "address" style='width: 100%;' value='{{eresult["created_time"]}}' /></p>
          <p>City: <input class="form-control" type = "text" name = "city" style='width: 100%;' value='{{eresult["city"]}}' /></p>
          <p>State: <input class="form-control" type ="text" name = "state" style='width: 100%;' value='{{eresult["state"]}}' /></p>
-         <p>Zip: <input class="form-control" type ="text" name = "zip" style='width: 100%;' value='{{eresult["zip"]}}' /></p>
+         <p>Zip: <input class="form-control" type ="text" name = "zip" style='width: 100%;' value='{{eresult["zip"]}}' /></p>-->
          <input type ="hidden" name = "old_first_name" value='{{eresult["first_name"]}}' />
          <input type ="hidden" name = "old_last_name" value='{{eresult["last_name"]}}' />
 
@@ -107,8 +107,8 @@
 <!--               <td>{{result['city']}}</td>
                <td>{{result['state']}}</td>
                <td>{{result['zip']}}</td>-->
-               <td align="center"><a href = "{{ url_for('sql_editlink', efname=result['word'], elname=result['payload']) }}"><i class="fas fa-edit"></a></td>
-               <td align="center"><a href = "{{ url_for('sql_datadelete', fname=result['word'], lname=result['payload']) }}"><i class="fas fa-trash-alt"></a></td>
+               <td align="center"><a href = "{{ url_for('sql_editlink', word=result['word']) }}"><i class="fas fa-edit"></a></td>
+               <td align="center"><a href = "{{ url_for('sql_datadelete', word=result['word']) }}"><i class="fas fa-trash-alt"></a></td>
             </tr>
          {% endfor %}
       </table>

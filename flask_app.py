@@ -1,6 +1,12 @@
 from flask import Flask, request, redirect, render_template
 import sys
 import os, ssl
+import base64
+import model.Word as Word;
+import model.Mean as Mean;
+import model.Payload as Payload;
+import json
+
 #Disable https
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
     getattr(ssl, '_create_unverified_context', None)):
@@ -14,9 +20,21 @@ app = Flask(__name__)
 @app.route('/') 
 def sql_database():
     from functions.sqlquery import sql_query
-    results = sql_query(''' SELECT * FROM words''')
+    results1 = sql_query(''' SELECT * FROM words''')
     msg = 'SELECT * FROM words'
-    # print(results)
+    #print(results)
+    results = []
+    # print(results1[0]['payload'])
+    # print(base64.decodestring(str(results1[0]['payload']).encode()))
+    x = json.loads(base64.decodestring(str(results1[0]['payload']).encode()))
+    print(x)
+    for result in results1:
+        resultx =dict()
+        resultx['payload'] = base64.decodebytes(str(result['payload']).encode());
+        resultx['word'] = result['word']
+        resultx['created_time'] = result['created_time']
+        results.append(resultx)
+
     return render_template('sqldatabase.html', results=results, msg=msg)   
 @app.route('/insert',methods = ['POST', 'GET']) #this is when user submits an insert
 def sql_datainsert():
@@ -36,20 +54,37 @@ def sql_datainsert():
 def sql_datadelete():
     from functions.sqlquery import sql_delete, sql_query
     if request.method == 'GET':
-        lname = request.args.get('lname')
-        fname = request.args.get('fname')
-        sql_delete(''' DELETE FROM data_table where first_name = ? and last_name = ?''', (fname,lname) )
+        word = request.args.get('word')
+        # fname = request.args.get('fname')
+        sql_delete(''' DELETE FROM words where word = ?''', (word,) )
     results = sql_query(''' SELECT * FROM data_table''')
-    msg = 'DELETE FROM data_table WHERE first_name = ' + fname + ' and last_name = ' + lname
+    msg = 'DELETE FROM words WHERE word = ' + word
     return render_template('sqldatabase.html', results=results, msg=msg)
 @app.route('/query_edit',methods = ['POST', 'GET']) #this is when user clicks edit link
 def sql_editlink():
     from functions.sqlquery import sql_query, sql_query2
     if request.method == 'GET':
-        elname = request.args.get('elname')
-        efname = request.args.get('efname')
-        eresults = sql_query2(''' SELECT * FROM data_table where first_name = ? and last_name = ?''', (efname,elname))
-    results = sql_query(''' SELECT * FROM data_table''')
+        word = request.args.get('word')
+        # efname = request.args.get('efname')
+        eresults1 = sql_query2(''' SELECT DISTINCT * FROM words where word = ?''', (word,))
+        #Decode base 64
+        eresults = []
+        for result in eresults1:
+            resultx = dict()
+            resultx['payload'] = base64.decodebytes(str(result['payload']).encode());
+            resultx['word'] = result['word']
+            resultx['created_time'] = result['created_time']
+            eresults.append(resultx)
+
+    results1 = sql_query(''' SELECT * FROM words''')
+    #Decode base 64
+    results = []
+    for result in results1:
+        resultx =dict()
+        resultx['payload'] = base64.decodebytes(str(result['payload']).encode());
+        resultx['word'] = result['word']
+        resultx['created_time'] = result['created_time']
+        results.append(resultx)
     return render_template('sqldatabase.html', eresults=eresults, results=results)
 @app.route('/edit',methods = ['POST', 'GET']) #this is when user submits an edit
 def sql_dataedit():
