@@ -1,6 +1,6 @@
 import os
 import sqlite3
-import pandas as pd
+# import pandas as pd
 
 # data_url = 'https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv'
 # headers = ['first_name','last_name','address','city','state','zip']
@@ -11,7 +11,7 @@ import pandas as pd
 #     os.remove('example.db')
 
 # Create a database
-conn = sqlite3.connect('example.db')
+# conn = sqlite3.connect('example.db')
 
 # Add the data to our database
 # data_table.to_sql('data_table', conn, dtype={
@@ -23,7 +23,7 @@ conn = sqlite3.connect('example.db')
 # 	'zip':'VARCHAR(5)',
 # })
 
-conn.row_factory = sqlite3.Row
+# conn.row_factory = sqlite3.Row
 
 # Make a convenience function for running SQL queries
 def sql_query(query):
@@ -35,15 +35,21 @@ def sql_query(query):
     return rows
 
 def sql_edit_insert(query,var):
+    conn = sqlite3.connect('example.db')
+    conn.row_factory = sqlite3.Row
     cur = conn.cursor()
     cur.execute(query,var)
     conn.commit()
 
 def sql_delete(query,var):
+    conn = sqlite3.connect('example.db')
+    conn.row_factory = sqlite3.Row
     cur = conn.cursor()
     cur.execute(query,var)
 
 def sql_query2(query,var):
+    conn = sqlite3.connect('example.db')
+    conn.row_factory = sqlite3.Row
     cur = conn.cursor()
     cur.execute(query,var)
     rows = cur.fetchall()
