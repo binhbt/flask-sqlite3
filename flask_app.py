@@ -32,7 +32,7 @@ def sql_database():
         resultx =dict()
         payload = json.loads(base64.decodestring(str(result['payload']).encode()));
         mean =  json.loads(base64.decodestring(str(payload['means']).encode()));
-        resultx['payload'] = mean[0]['meaning'];
+        resultx['payload'] = mean;
         resultx['word'] = result['word']
         resultx['created_time'] = result['created_time']
         results.append(resultx)
@@ -73,10 +73,9 @@ def sql_editlink():
         eresults = []
         for result in eresults1:
             resultx = dict()
-            payload = base64.decodebytes(str(result['payload']).encode());
-            mean = base64.decodebytes(str(payload['means']).encode());
-            resultx['payload'] = mean;
-            resultx['word'] = result['word']
+            payload = base64.decodestring(str(result['payload']))
+            resultx['word'] = word
+            resultx['payload'] = payload
             resultx['created_time'] = result['created_time']
             eresults.append(resultx)
 
@@ -85,7 +84,9 @@ def sql_editlink():
     results = []
     for result in results1:
         resultx =dict()
-        resultx['payload'] = base64.decodebytes(str(result['payload']).encode());
+        payload = json.loads(base64.decodestring(str(result['payload']).encode()));
+        mean =  json.loads(base64.decodestring(str(payload['means']).encode()));
+        resultx['payload'] = mean;
         resultx['word'] = result['word']
         resultx['created_time'] = result['created_time']
         results.append(resultx)

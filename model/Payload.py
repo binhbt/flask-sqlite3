@@ -1,4 +1,4 @@
-class Word:
+class Payload:
     def __init__(self, sound_us_mp3=None, sound_uk_ogg=None, pro_uk=None, means=None, wtype=None, sound_us_ogg=None,
                  word=None, sound_uk_mp3=None, example=None, pro_us=None):
         self.pro_us = pro_us
