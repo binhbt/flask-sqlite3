@@ -1,5 +1,7 @@
 import os
 import sqlite3
+
+
 # import pandas as pd
 
 # data_url = 'https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv'
@@ -34,23 +36,27 @@ def sql_query(query):
     rows = cur.fetchall()
     return rows
 
-def sql_edit_insert(query,var):
+
+def sql_edit_insert(query, var):
     conn = sqlite3.connect('example.db')
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-    cur.execute(query,var)
+    cur.execute(query, var)
     conn.commit()
 
-def sql_delete(query,var):
-    conn = sqlite3.connect('example.db')
-    conn.row_factory = sqlite3.Row
-    cur = conn.cursor()
-    cur.execute(query,var)
 
-def sql_query2(query,var):
+def sql_delete(query, var):
     conn = sqlite3.connect('example.db')
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-    cur.execute(query,var)
+    cur.execute(query, var)
+    conn.commit()
+
+
+def sql_query2(query, var):
+    conn = sqlite3.connect('example.db')
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute(query, var)
     rows = cur.fetchall()
     return rows

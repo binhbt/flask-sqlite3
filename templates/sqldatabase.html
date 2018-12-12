@@ -21,7 +21,8 @@
   border-radius: 50%;
   display: inline-block;
 }
-</style>
+
+    </style>
 </head>
 <body>
 
@@ -49,8 +50,8 @@
         <form action="edit" method="POST">
             <p>Word: <input class="form-control" type="text" name="first_name" style='width: 100%;'
                             value='{{eresult["word"]}}'/></p>
-            <p>Mean: <input class="form-control" type="text" name="last_name" style='width: 100%;'
-                            value='{{eresult["payload"]}}'/></p>
+            <p>Payload: <input class="form-control" type="text" name="last_name" style='width: 100%;'
+                               value='{{eresult["payload"]}}'/></p>
             <!--         <p>Address: <input class="form-control" type = "text" name = "address" style='width: 100%;' value='{{eresult["created_time"]}}' /></p>
                      <p>City: <input class="form-control" type = "text" name = "city" style='width: 100%;' value='{{eresult["city"]}}' /></p>
                      <p>State: <input class="form-control" type ="text" name = "state" style='width: 100%;' value='{{eresult["state"]}}' /></p>
@@ -73,12 +74,12 @@
         </div>
 
         <form action="insert" method="POST">
-            <p>First Name: <input class="form-control" type="text" name="first_name" style='width: 100%;'/></p>
-            <p>Last Name: <input class="form-control" type="text" name="last_name" style='width: 100%;'/></p>
-            <p>Address: <input class="form-control" type="text" name="address" style='width: 100%;'/></p>
-            <p>City: <input class="form-control" type="text" name="city" style='width: 100%;'/></p>
-            <p>State: <input class="form-control" type="text" name="state" style='width: 100%;'/></p>
-            <p>Zip: <input class="form-control" type="text" name="zip" style='width: 100%;'/></p>
+            <p>Word: <input class="form-control" type="text" name="word" style='width: 100%;'/></p>
+            <p>Mean: <input class="form-control" type="text" name="payload" style='width: 100%;'/></p>
+            <!--            <p>Address: <input class="form-control" type="text" name="address" style='width: 100%;'/></p>
+                        <p>City: <input class="form-control" type="text" name="city" style='width: 100%;'/></p>
+                        <p>State: <input class="form-control" type="text" name="state" style='width: 100%;'/></p>
+                        <p>Zip: <input class="form-control" type="text" name="zip" style='width: 100%;'/></p>-->
             <br>
 
             <p><input class="btn-primary" type="submit" value="Insert Data"/></p>
@@ -122,15 +123,16 @@
     <tr>
         <td>{{result["word"]}}</td>
 
-<!--
-        <td>{{result["payload"]}}</td>
--->
+        <!--
+                <td>{{result["payload"]}}</td>
+        -->
 
         <td>
-                {% for mean in result["payload"] %}
-                <p><b>{{mean["meaning"]}}</b><p>
-            {% for example in mean["example"] %}
-            <p class="ridge">  <span class="dot"></span>{{example}}</p>
+            {% for mean in result["payload"] %}
+            <p><b>{{mean["meaning"]}}</b>
+            <p>
+                {% for example in mean["example"] %}
+            <p class="ridge"><span class="dot"></span>{{example}}</p>
             {% endfor %}
             {% endfor %}
         </td>
